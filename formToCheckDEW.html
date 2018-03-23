@@ -7,17 +7,47 @@
 <script language="javascript" type="text/javascript">
 
 var fecha = new Date();
-var errmsg = "";
+
+  function allcheck(f){
+    var flag = true;
+    var errmsg = "";
+
+    if (f.numTarj1.value!=f.numTarj2.value) {
+      flag = false;
+      errmsg +="Los Números de Tarjeta no coinciden\n";
+    }
+
+    if(f.precio.value<1||isNaN(f.precio.value)||!/^([0-9])*$/.test(f.precio.value)){
+      flag = false;
+      errmsg +="El Número de unidades no es valido \n";
+    }
+
+    if(f.select.selectedIndex<0){
+          errmsg +=("ERROR: Seleccione al menos un Departamento");
+          flag = false;
+    }
+    
+    if(!(/\S+@\S+\.\S+/.test(f.email.value))){
+      errmsg +=("ERROR: El Correo introducido es invalido");
+      flag = false;
+    }
 
 
-function allcheck(f){
-if (f.nif.value == ""){
-alert("El NIF no puede estar vacio");
-}
 
 
 
-}
+  if (!flag){
+  alert(errmsg);
+  return false;
+  }
+  alert("TODO BOiEN");
+  return true;
+
+  }
+
+
+
+  
 
 function calculaLetraNIF(f)
 {
@@ -37,7 +67,7 @@ return true;
 
   <div id="tsrStyle" class="tsrForm">
     <h1>Formulario a comprobar</h1>
-    <form action="http://memex.dsic.upv.es:8080/dew1/Printenv" id="clientForm" method="post" onsubmit="return calculaLetraNIF(this);">
+    <form action="http://memex.dsic.upv.es:8080/dew1/Printenv" id="clientForm" method="post" onsubmit="return allcheck(this);">
       <fieldset><legend>Datos del producto</legend>
 
       <label for="codigo">C&oacute;digo
@@ -57,8 +87,8 @@ return true;
       <label for="direccion">Direcci&oacute;n  de env&iacute;o
       </label> <textarea class="textbox" name="direccion" id="direccion" rows="3" cols="40"></textarea>
 
-      <label for="select">Departamentos visitados <span class="small">Selecciona al menos uno</span>
-      </label> <select class="textbox" name="select" id="select" size="3" multiple="multiple">
+      <label for="select">Departamentos visitados <span class="small">Selecciona al menos uno</span></label>
+      <select class="textbox" name="select" id="select" size="3" multiple="multiple">
         <option value="Alimentacion">Alimentaci&oacute;n</option>
         <option value="Muebles">Muebles</option>
         <option value="Musica">M&uacute;sica</option>
