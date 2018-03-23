@@ -8,53 +8,73 @@
 
 var fecha = new Date();
 
+ 
+
   function allcheck(f){
     var flag = true;
     var errmsg = "";
+    var radiook=0;
+  
+
+    for(var i = 0; i < f.tarjeta.length; i++){
+       if(f.tarjeta[i].checked){
+          radiook++;
+        }
+    }
+
+    if(radiook<1||radiook>1){
+      flag = false;
+      errmsg +="ERROR: Seleccione al menos una tarjeta \n";
+
+    }
 
     if (f.numTarj1.value!=f.numTarj2.value) {
       flag = false;
-      errmsg +="Los Números de Tarjeta no coinciden\n";
+      errmsg +="ERROR:Los Números de Tarjeta no coinciden\n";
     }
 
     if(f.precio.value<1||isNaN(f.precio.value)||!/^([0-9])*$/.test(f.precio.value)){
       flag = false;
-      errmsg +="El Número de unidades no es valido \n";
+      errmsg +="ERROR:El Número de unidades no es valido \n";
     }
 
     if(f.select.selectedIndex<0){
-          errmsg +=("ERROR: Seleccione al menos un Departamento");
+          errmsg +=("ERROR: Seleccione al menos un Departamento\n");
           flag = false;
     }
     
-    if(!(/\S+@\S+\.\S+/.test(f.email.value))){
-      errmsg +=("ERROR: El Correo introducido es invalido");
+    if(!(/\w+@\w+/.test(f.email.value))){
+      errmsg +=("ERROR: El Correo introducido es invalido\n");
       flag = false;
     }
 
+    if(!(/\w+,\s\S+/.test(f.nombre.value))){
+      errmsg +=("ERROR: El Nombre es invalido\n");
+      flag = false;
+    }
 
+    if(!(/^[1-9][0-9]{11,11}$/.test(f.numTarj1.value))){
+       flag = false;
+      errmsg +="ERROR:Números de Tarjeta Invalidos\n";
 
+    }
 
-
+    if(!(/^[0-9]{8,8}\-{1}[A-z]{1}$/.test(f.dni.value))){
+      flag = false;
+      errmsg +="ERROR:DNI invalido\n";
+    } 
+     
+    
   if (!flag){
   alert(errmsg);
   return false;
   }
+
   alert("TODO BOiEN");
   return true;
-
   }
 
 
-
-  
-
-function calculaLetraNIF(f)
-{
-letras="TRWAGMYFPDXBNJZSQVHLCKET";
-f.dni.value=f.dni.value+"-"+letras[f.dni.value % 23];
-return true;
-}
 </script>
   
   
