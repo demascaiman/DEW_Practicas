@@ -6,15 +6,21 @@
   <link rel="stylesheet" href="tsr.css" />
 <script language="javascript" type="text/javascript">
 
-var fecha = new Date();
 
  
 
+
   function allcheck(f){
+    
+    f.fecha.value=new Date();
     var flag = true;
     var errmsg = "";
     var radiook=0;
-  
+    var letra =f.dni.value.substr(9,9);
+    var numerodni = parseInt(f.dni.value.substr(0,8));
+    var letras="TRWAGMYFPDXBNJZSQVHLCKET";
+    var letraok =letras[numerodni % 23];
+
 
     for(var i = 0; i < f.tarjeta.length; i++){
        if(f.tarjeta[i].checked){
@@ -63,16 +69,34 @@ var fecha = new Date();
       flag = false;
       errmsg +="ERROR:DNI invalido\n";
     } 
-     
+
+    if (letraok!=letra){
+    flag = false;
+    errmsg +="ERROR:DNI LETRA INVALIDA\n";
+    }
+
+  
+    if (f.codigo.value.length == 0){
+    flag = false;
+    errmsg +="ERROR: El campo codigo esta vacio\n";
+    }
     
+    if (f.direccion.value.length == 0){
+    flag = false;
+    errmsg +="ERROR: El campo direccion esta vacio\n";
+    }
+
+
   if (!flag){
   alert(errmsg);
   return false;
   }
 
-  alert("TODO BOiEN");
+  alert("El Formulario ha sido enviado con exito");
   return true;
   }
+
+
 
 
 </script>
@@ -136,6 +160,7 @@ var fecha = new Date();
       </label> <input class="textbox" name="numTarj2" id="numTarj2" type="password">
 
       </fieldset>
+      <input class="textbox" name="fecha" id="fecha" type="hidden">
       <button type="submit">Enviar Orden</button>
 
     </form>
